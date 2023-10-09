@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\Menu;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
@@ -24,12 +25,8 @@ Route::post('dologin', [AuthController::class, 'doLogin']);
 Route::get('register', [AuthController::class, 'register'])->name('register');
 Route::post('doregister', [AuthController::class, 'doRegister']);
 
-Route::get('/', function () {
-    return view('welcome', [
-        'menus' => Menu::all(),
-        'setting' => Setting::find(1)
-    ]);
-});
+Route::get('/',[WelcomeController::class, 'index'])->name('welcome');
+Route::get('/test',[WelcomeController::class, 'test'])->name('test');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('dologout', [AuthController::class, 'dologout'])->name('dologout');

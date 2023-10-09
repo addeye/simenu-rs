@@ -19,7 +19,7 @@
             </a>
         </div>
         <form method="POST" class="" action="/menu" enctype="multipart/form-data">
-            <input type="hidden" name="status" value="active">
+            <input type="hidden" name="status" value="1">
             @csrf
             <div class="mb-3">
     <label for="inputNama" class="form-label">Nama Menu</label>
