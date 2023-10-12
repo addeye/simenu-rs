@@ -40,6 +40,9 @@ class MenuController extends Controller
             $menu->orderBy('status', request('sort_val'));
         }
 
+        if($sort == 'DESC'){
+            $menu->orderBy('urutan', 'ASC');
+        }
 
         if (request('cari')) {
             $menu->where(function ($q) {
@@ -194,5 +197,19 @@ class MenuController extends Controller
         $menu->save();
 
         return redirect('menu');
+    }
+
+    public function urutan(){
+        return view('pages.menu.sorting',[
+            'menus' => Menu::where('status', 1)->orderBy('urutan')->get()
+        ]);
+    }
+
+    public function setUrutan(Request $request){
+        // return $request->all();
+        foreach($request->sort as $key => $sort){
+            Menu::where('id',$sort)->update(['urutan'=>$key+1]);
+        }
+        return redirect('menu-urutan');
     }
 }

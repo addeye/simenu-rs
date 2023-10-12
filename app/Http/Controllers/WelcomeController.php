@@ -12,7 +12,7 @@ class WelcomeController extends Controller
     public function index(){
         // return Menu::all();
         return view('welcome', [
-            'menus' => Menu::where('status', "1")->get(),
+            'menus' => Menu::where('status', "1")->orderBy('urutan', 'ASC')->get(),
             'setting' => Setting::find(1)
         ]);
     }
