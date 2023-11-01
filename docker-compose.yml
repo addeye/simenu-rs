@@ -5,8 +5,8 @@ services:
   app:
     build:
       args:
-        user: addeye
-        uid: 1234
+        user: simrs
+        uid: 1000
       context: ./
       dockerfile: Dockerfile
     image: laravel-app
