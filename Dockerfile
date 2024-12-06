@@ -1,34 +1,21 @@
-FROM php:8.1-fpm
+FROM php:7.3-apache
 
-# Arguments defined in docker-compose.yml
-ARG user
-ARG uid
+RUN apt update
+RUN apt install -y git zip unzip
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip
+RUN apt install -y curl
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+COPY ./ /var/www/html/
+WORKDIR /var/www/html/
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN rm -rf /var/www/html/vendor /var/www/html/composer.lock
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# add ext-gd
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev libzip-dev && docker-php-ext-install gd
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+RUN a2enmod rewrite
 
-# Set working directory
-WORKDIR /var/www
+RUN composer install
 
-USER $user
+EXPOSE 80
