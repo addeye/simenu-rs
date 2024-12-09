@@ -27,7 +27,6 @@
                     <ul id="templatemo_menu">
                         @foreach ($menus as $item)
                         <li>
-                            
                             <a href="{{$item->link}}">
                                 <img style="width: 92px; height: 92px; object-fit: contain; object-position: center;" src="{{asset('storage/'.$item->gambar)}}" alt="">
                                 <span>{{$item->nama}}</span>

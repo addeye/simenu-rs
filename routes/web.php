@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\MenuController;
@@ -30,12 +31,10 @@ Route::get('/test', [WelcomeController::class, 'test'])->name('test');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('dologout', [AuthController::class, 'dologout'])->name('dologout');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resources([
-        'user' => UserController::class, 
-        'setting' => SettingController::class, 
+        'user' => UserController::class,
+        'setting' => SettingController::class,
         'menu' => MenuController::class
     ]);
     Route::get('menu-urutan', [MenuController::class, 'urutan']);

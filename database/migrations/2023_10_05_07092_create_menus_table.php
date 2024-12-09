@@ -18,7 +18,7 @@ class CreateMenusTable extends Migration
             $table->string('nama');
             $table->string('gambar');
             $table->string('link');
-            $table->string('status');
+            $table->string('status')->default(1);
 
             $table->timestamps();
         });
